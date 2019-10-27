@@ -1,0 +1,13 @@
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+development:
+  <<: *default
+  database: rakuten_challenge_development
+
+test:
+  <<: *default
+  database: rakuten_challenge_test
