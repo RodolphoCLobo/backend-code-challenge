@@ -6,8 +6,9 @@ source 'https://rubygems.org'
   gem 'sinatra'
   gem 'sinatra-activerecord'
   gem 'sinatra-contrib'
-  
+
 group :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'rspec'
 end
