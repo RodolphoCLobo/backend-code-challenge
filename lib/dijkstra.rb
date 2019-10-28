@@ -1,25 +1,13 @@
 class Dijkstra
 	attr_accessor :graph, :origin, :destination, :edges, :verticies
 
-	def unique_verticies
-		self.edges.flatten.uniq.select { |edge| edge.class == String }
-	end
-
-	def populate_graph
-		self.graph = self.verticies.map do |vertex|
-			node = { vertex: vertex, closed: false, predecessor: nil, distance: Float::INFINITY, neighbors: [] }
-			node[:distance] = 0 if vertex == origin
-			node
-		end
-	end
-
 	def initialize(origin, destination, edges)
 		self.graph = []
 		self.origin = origin
 		self.destination = destination
 		self.edges = edges
-		self.verticies = self.unique_verticies
-		self.populate_graph
+		self.verticies = unique_verticies
+		populate_graph
 		self.verticies.each do |vertex|
 			self.edges.each do |edge|
 				if edge.include?(vertex)
@@ -45,6 +33,18 @@ class Dijkstra
 	end
 
 	private
+
+	def unique_verticies
+		self.edges.flatten.uniq.select { |edge| edge.class == String }
+	end
+
+	def populate_graph
+		self.graph = self.verticies.map do |vertex|
+			node = { vertex: vertex, closed: false, predecessor: nil, distance: Float::INFINITY, neighbors: [] }
+			node[:distance] = 0 if vertex == origin
+			node
+		end
+	end
 
 	def recursive_dijkstra
 		open_verticies = self.graph.select { |node| node[:closed] == false }.sort_by { |node| node[:distance] }
