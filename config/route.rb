@@ -14,5 +14,8 @@ class Route < Sinatra::Base
   end
 
   post '/distances' do
+    result = DistancesController::create(params)
+    status result[:http_status]
+    result.to_json
   end
 end
