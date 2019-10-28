@@ -1,64 +1,51 @@
-Ruby/Elixir Engineer Coding Challenge
-=======================
+# README
 
-Hello!
+Resolução do teste de processo seletivo da Rakuten Brasil:
 
-We've come up with this relatively open-ended programming/engineering challenge that will allow you to demonstrate your skills from the comfort of your own workspace. In addition, we know your time is valuable, so please feel free to use your completed work as a portfolio piece.
+Foi utilizado o algoritmo de Dijkstra para solucionar o caso do melhor caminho, a lib criada não tem suporte em vértices com refências numéricas para seus nomes. Durante todo o projeto foi decidido usar Sinatra por ser uma API simples com apenas 2 rotas('/costs', '/distances').
 
-We wish you the best of luck and can't wait to see what you create!
+# Using
 
-## Overview
+* Versão do Ruby
 
-Your goal is to develop a system to calculate the shipping cost for products of an order, based on it's weight and distance from origin to destination. The distribution points will be supplied to this system throught an API and the shipping cost will be calculated in another API, always aiming at the lowest cost to the customer.
+  - 2.6.3
 
-To populate the database, another system will call the API informing the distance (in kilometers) between two distribution points of the distribution network. For example:
-```
-POST /distance
-A B 10
-```
-```
-POST /distance
-B C 15
-```
-```
-POST /distance
-A C 30
-```
+* Dependências do Sistema
 
-In a second moment, the shopping system will call the API informing the total weight of the order, the *source* and *destination* points. The system should return the lowest shipping cost, using the formula: `cost = distance * weight * 0.15`. For example:
+  - PostgreSQL
 
-```
-GET /cost?origin=A&destination=C&weight=5
-18.75
-```
+* Configurações
 
-Explanation: the shortest path from A to C is A -> B -> C = 25km. `cost = 25 * 5 * 0.15 = 18.75`
+  - utilize o comando `gem install bundle ; bundle install` no diretório da aplicação.
 
-## Considerations
+* Criar Banco de Dados
 
-* The input format of distance should have the format `A B X`, where *0 < X <= 100000*. Wrong format or data should return an error;
-* If a distance point already exists, should be replaced with the new value;
-* The cost API should validate the given points and weight, where *0 < weight <= 50*. If no path was found between *origin*  and *destination*, an error should be returned;
-* The solution should be implemented in Ruby or Elixir. You could use the frameworks that you're most used to.
-* Both APIs will receive a large amount of requests: choose the design and technology wisely;
+  - utilize o comando `rake db:create` no diretório da aplicação.
 
-## Submission
+* Criar Banco de Dados para Test (caso o comando anterior nao crie automaticamente).
 
-You can follow the GitHub Fork/Pull Request workflow by [forking this repository](https://github.com/RakutenBrasil/backend-code-challenge/fork), commiting your changes, and submiting a pull request to us, explaning your solution, technical decisions and how configure/use on the README file. For more information about that, you can see this [GitHub article](https://help.github.com/articles/fork-a-repo/#propose-changes-to-someone-elses-project).
+  - utilize o comando `rake db:create RACK_ENV=test` no diretório da aplicação.
 
-## What we are looking for
+* Criar Migration
 
-We are looking for several things with this challenge. First, of course, we're looking for your answer to be technically correct. Beyond that, we're also looking for:
+  - utilize o comando `rake db:migrate` no diretório da aplicação.
 
-* Is your code easy to read and understand?
-* Are you following the usual conventions for Ruby/Elixir development?
-* How good are you at writing tests? And how easy are they to read and understand?
-* Did you follow these directions?
+* Criar Migration no Environment Test
 
-We will of course **examine your code to see its correctness, readability, general elegance, architectural decisions, and modularity**. If/when you meet with us, be prepared to talk about why and how you design your solution. We also test your system with a large amount of data to mesure the performance and to see if we can break stuff.
+  - utilize o comando `rake db:migrate RACK_ENV=test` no diretório da aplicação.
 
-That's it. There aren't any hidden gotchas or trick questions. That's really what we're going to do.
+* Popular Banco de Dados
 
-## License
+  - utilize o comando `rake db:seed` no diretório da aplicação.
 
-We have licensed this project under the MIT license so that you may use this for a portfolio piece (or anything else!).
+* Testes
+
+  - utilize o comando `bundle exec rspec spec` no diretório da aplicação.
+
+* Iniciar Aplicação
+
+  - utilize o comando `rackup -p PORTA_DESEJADA` no diretório da aplicação.
+
+## Contribuidores
+
+ - Rodolpho Corrêa Lobo de Azeredo
