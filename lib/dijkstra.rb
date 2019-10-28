@@ -2,7 +2,7 @@ class Dijkstra
 	attr_accessor :graph, :origin, :destination, :edges, :verticies
 
 	def unique_verticies
-		self.edges.flatten.uniq.select { |s| s.class == String }
+		self.edges.flatten.uniq.select { |edge| edge.class == String }
 	end
 
 	def populate_graph
@@ -23,28 +23,7 @@ class Dijkstra
 		self.verticies.each do |vertex|
 			self.edges.each do |edge|
 				if edge.include?(vertex)
-					self.graph.detect { |s| s[:vertex] == vertex }[:neighbors] << edge.detect { |s| s != vertex && s.class == String }
-				end
-			end
-		end
-		self.recursive_dijkstra
-	end
-
-	def recursive_dijkstra
-		open_verticies = self.graph.select { |s| s[:closed] == false }.sort_by { |node| node[:distance] }
-		return if open_verticies.count == 0
-		node = open_verticies.first
-		node[:closed] = true
-		node[:neighbors].each do |neighbor|
-			neighbor_vertex = self.graph.detect { |s| s[:vertex] == neighbor && s[:closed] == false }
-			next if neighbor_vertex.nil?
-			self.edges.each do |edge|
-				if edge.include?(node[:vertex]) && edge.include?(neighbor_vertex[:vertex])
-					matcher_distance = node[:distance] + edge[2]
-					if matcher_distance < neighbor_vertex[:distance]
-						neighbor_vertex[:distance] = matcher_distance
-						neighbor_vertex[:predecessor] = node[:vertex]
-					end
+					self.graph.detect { |node| node[:vertex] == vertex }[:neighbors] << edge.detect { |neighbor| neighbor != vertex && neighbor.class == String }
 				end
 			end
 		end
@@ -63,5 +42,28 @@ class Dijkstra
 			path.unshift(predecessor) unless predecessor.nil?
 		end
 		path
+	end
+
+	private
+
+	def recursive_dijkstra
+		open_verticies = self.graph.select { |node| node[:closed] == false }.sort_by { |node| node[:distance] }
+		return if open_verticies.count == 0
+		node = open_verticies.first
+		node[:closed] = true
+		node[:neighbors].each do |neighbor|
+			neighbor_vertex = self.graph.detect { |node| node[:vertex] == neighbor && node[:closed] == false }
+			next if neighbor_vertex.nil?
+			self.edges.each do |edge|
+				if edge.include?(node[:vertex]) && edge.include?(neighbor_vertex[:vertex])
+					matcher_distance = node[:distance] + edge[2]
+					if matcher_distance < neighbor_vertex[:distance]
+						neighbor_vertex[:distance] = matcher_distance
+						neighbor_vertex[:predecessor] = node[:vertex]
+					end
+				end
+			end
+		end
+		recursive_dijkstra
 	end
 end
