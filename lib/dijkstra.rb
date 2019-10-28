@@ -11,11 +11,7 @@ class Dijkstra
 	def populate_graph(origin, destination)
 		self.origin = origin
 		self.destination = destination
-		self.graph = self.verticies.map do |vertex|
-			node = { vertex: vertex, closed: false, predecessor: nil, distance: Float::INFINITY, neighbors: [] }
-			node[:distance] = 0 if vertex == origin
-			node
-		end
+		self.graph = create_nodes
 		populate_neighbors
 		recursive_dijkstra
 	end
@@ -38,6 +34,14 @@ class Dijkstra
 
 	def unique_verticies
 		self.edges.flatten.uniq.select { |edge| edge.class == String }
+	end
+
+	def create_nodes
+		self.verticies.map do |vertex|
+			node = { vertex: vertex, closed: false, predecessor: nil, distance: Float::INFINITY, neighbors: [] }
+			node[:distance] = 0 if vertex == origin
+			node
+		end
 	end
 
 	def populate_neighbors
