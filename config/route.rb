@@ -12,6 +12,9 @@ class Route < Sinatra::Base
   end
 
   get '/costs' do
+    result = CostsController::calculate_cost(params)
+    status result[:http_status]
+    result.to_json
   end
 
   post '/distances' do

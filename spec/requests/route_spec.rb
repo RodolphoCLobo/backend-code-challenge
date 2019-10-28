@@ -66,4 +66,72 @@ RSpec.describe Route, type: :request do
       end
     end
   end
+  
+  describe 'GET /costs' do
+
+    let!(:d1) { create(:distance_1) }
+    let!(:d2) { create(:distance_2) }
+    let!(:d3) { create(:distance_3) }
+
+    context 'when params are valid.' do
+
+      before do
+        get '/costs?origin=a&destination=c&weight=5'
+      end
+
+      it 'should return the cost for shortest path.' do
+        json_body = JSON.parse(last_response.body, symbolize_names: true)
+
+        expect(json_body[:cost]).to eq(18.75)
+      end
+
+      it 'should return the shortest path.' do
+        json_body = JSON.parse(last_response.body, symbolize_names: true)
+
+        expect(json_body[:shortest_path]).to eq("a, b, c")
+      end
+
+      it 'should return status code 200.' do
+
+        expect(last_response.status).to eq(200)
+      end
+    end
+
+    context 'when params are invalid.' do
+      context 'when origin or destination are invalid.' do
+
+        before do
+          get '/costs?origin=1&destination=2&weight=5'
+        end
+
+        it 'should return a error message.' do
+          json_body = JSON.parse(last_response.body, symbolize_names: true)
+
+          expect(json_body[:message]).to include('destination value does not exist!')
+        end
+
+        it 'should return status code 406.' do
+
+          expect(last_response.status).to eq(406)
+        end
+      end
+
+      context 'when weight is invalid.' do
+
+        before do
+          get '/costs?origin=a&destination=c&weight=100'
+        end
+
+        it 'should return a error message.' do
+          json_body = JSON.parse(last_response.body, symbolize_names: true)
+
+          expect(json_body[:message]).to include('Invalid params!')
+        end
+        it 'should return status code 400.' do
+
+          expect(last_response.status).to eq(400)
+        end
+      end
+    end
+  end
 end
