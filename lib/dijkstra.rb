@@ -3,18 +3,20 @@ class Dijkstra
 
 	def initialize(origin, destination, edges)
 		self.graph = []
-		self.origin = origin
-		self.destination = destination
 		self.edges = edges
 		self.verticies = unique_verticies
-		populate_graph
-		self.verticies.each do |vertex|
-			self.edges.each do |edge|
-				if edge.include?(vertex)
-					self.graph.detect { |node| node[:vertex] == vertex }[:neighbors] << edge.detect { |neighbor| neighbor != vertex && neighbor.class == String }
-				end
-			end
+		populate_graph(origin, destination)
+	end
+
+	def populate_graph(origin, destination)
+		self.origin = origin
+		self.destination = destination
+		self.graph = self.verticies.map do |vertex|
+			node = { vertex: vertex, closed: false, predecessor: nil, distance: Float::INFINITY, neighbors: [] }
+			node[:distance] = 0 if vertex == origin
+			node
 		end
+		populate_neighbors
 		recursive_dijkstra
 	end
 
@@ -38,12 +40,14 @@ class Dijkstra
 		self.edges.flatten.uniq.select { |edge| edge.class == String }
 	end
 
-	def populate_graph
-		self.graph = self.verticies.map do |vertex|
-			node = { vertex: vertex, closed: false, predecessor: nil, distance: Float::INFINITY, neighbors: [] }
-			node[:distance] = 0 if vertex == origin
-			node
-		end
+	def populate_neighbors
+	  self.verticies.each do |vertex|
+	    self.edges.each do |edge|
+	      if edge.include?(vertex)
+	        self.graph.detect { |node| node[:vertex] == vertex }[:neighbors] << edge.detect { |neighbor| neighbor != vertex && neighbor.class == String }
+	      end
+	    end
+	  end
 	end
 
 	def recursive_dijkstra
