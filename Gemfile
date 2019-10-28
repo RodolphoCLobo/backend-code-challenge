@@ -16,4 +16,5 @@ group :test do
   gem 'rack-test'
   gem 'rspec'
   gem 'shoulda-matchers'
+  gem 'simplecov'
 end

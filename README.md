@@ -42,6 +42,8 @@ Foi utilizado o algoritmo de Dijkstra para solucionar o caso do melhor caminho, 
 
   - utilize o comando `bundle exec rspec spec` no diretório da aplicação.
 
+  - após executar os testes será gerado uma análise de cobertura de testes, que pode ser acessada no navegador. Para isso, copie o path do arquivo gerado no diretorio './coverage/index.html' e cole no navegador.
+
 * Iniciar Aplicação
 
   - utilize o comando `rackup -p PORTA_DESEJADA` no diretório da aplicação.
