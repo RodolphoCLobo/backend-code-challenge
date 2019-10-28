@@ -36,5 +36,14 @@ RSpec.describe Dijkstra, type: :lib do
         expect(Dijkstra.new('a', 'c', edges).shortest_path).to eq(["a", "b", "c"])
       end
     end
+
+    describe '#shortest_distance' do
+      it 'should return the shortest distance.' do
+        distances = Distance.all
+        edges = ApplicationHelper.parse_edges(distances)
+
+        expect(Dijkstra.new('a', 'c', edges).shortest_distance).to eq(25)
+      end
+    end
   end
 end

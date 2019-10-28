@@ -57,4 +57,14 @@ class Dijkstra
 	def shortest_distance
 		self.graph.detect { |node| node[:vertex] == self.destination }[:distance]
 	end
+
+	def shortest_path
+		path = [self.destination]
+		predecessor = self.destination
+		while !predecessor.nil?
+			predecessor = self.graph.detect { |node| node[:vertex] == predecessor }[:predecessor]
+			path.unshift(predecessor) unless predecessor.nil?
+		end
+		path
+	end
 end
