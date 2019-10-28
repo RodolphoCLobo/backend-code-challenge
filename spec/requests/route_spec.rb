@@ -16,7 +16,7 @@ RSpec.describe Route, type: :request do
         it 'should return a success message.' do
           json_body = JSON.parse(last_response.body, symbolize_names: true)
 
-          expect(json_body[:message]).to include('Distance created with success!')
+          expect(json_body[:message]).to include('Distance created or updated with success!')
         end
 
         it 'should return status code 200.' do
@@ -66,7 +66,7 @@ RSpec.describe Route, type: :request do
       end
     end
   end
-  
+
   describe 'GET /costs' do
 
     let!(:d1) { create(:distance_1) }

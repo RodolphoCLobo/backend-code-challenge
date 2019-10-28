@@ -6,7 +6,7 @@ class DistancesController
         origin: params['origin'], destination: params['destination']
       )
       if distance.update(kilometers: params['kilometers'])
-        { message: 'Distance created with success!', http_status: 200 }
+        { message: 'Distance created or updated with success!', http_status: 200 }
       else
         { message: distance.errors.full_messages.first, http_status: 400 }
       end
