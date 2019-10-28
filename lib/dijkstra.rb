@@ -32,21 +32,18 @@ class Dijkstra
 
 	def recursive_dijkstra
 		open_verticies = self.graph.select { |s| s[:closed] == false }.sort_by { |node| node[:distance] }
-		if open_verticies.count == 0
-			return
-		else
-			node = open_verticies.first
-			node[:closed] = true
-			node[:neighbors].each do |neighbor|
-				neighbor_vertex = self.graph.detect { |s| s[:vertex] == neighbor && s[:closed] == false }
-				next if neighbor_vertex.nil?
-				self.edges.each do |edge|
-					if edge.include?(node[:vertex]) && edge.include?(neighbor_vertex[:vertex])
-						matcher_distance = node[:distance] + edge[2]
-						if matcher_distance < neighbor_vertex[:distance]
-							neighbor_vertex[:distance] = matcher_distance
-							neighbor_vertex[:predecessor] = node[:vertex]
-						end
+		return if open_verticies.count == 0
+		node = open_verticies.first
+		node[:closed] = true
+		node[:neighbors].each do |neighbor|
+			neighbor_vertex = self.graph.detect { |s| s[:vertex] == neighbor && s[:closed] == false }
+			next if neighbor_vertex.nil?
+			self.edges.each do |edge|
+				if edge.include?(node[:vertex]) && edge.include?(neighbor_vertex[:vertex])
+					matcher_distance = node[:distance] + edge[2]
+					if matcher_distance < neighbor_vertex[:distance]
+						neighbor_vertex[:distance] = matcher_distance
+						neighbor_vertex[:predecessor] = node[:vertex]
 					end
 				end
 			end
