@@ -41,15 +41,17 @@ RSpec.describe CostsController, type: :controller do
       context 'when params are valid.' do
 
         it 'should return a hash with the shortest path.' do
+          distances = Distance.all
           params = { 'origin'=> 'a', 'destination'=> 'c'}
 
-          expect(CostsController.search_best_path(params)[:shortest_path]).to eq(["a", "b", "c"])
+          expect(CostsController.search_best_path(distances, params)[:shortest_path]).to eq(["a", "b", "c"])
         end
 
         it 'should return a hash with the distance of shortest path.' do
+          distances = Distance.all
           params = { 'origin'=> 'a', 'destination'=> 'c'}
 
-          expect(CostsController.search_best_path(params)[:kilometers]).to eq(25)
+          expect(CostsController.search_best_path(distances, params)[:kilometers]).to eq(25)
         end
       end
       # when params are not valid is captured and tested in #calculate_cost.
