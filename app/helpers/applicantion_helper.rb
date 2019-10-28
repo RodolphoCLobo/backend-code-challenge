@@ -7,5 +7,9 @@ module ApplicationHelper
       end
       params
     end
+
+    def parse_edges(distances)
+      distances.map { |entry| [entry.origin, entry.destination, entry.kilometers] }
+    end
   end
 end

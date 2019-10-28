@@ -20,5 +20,24 @@ RSpec.describe ApplicationHelper, type: :helper do
         end
       end
     end
+
+    describe '#parse_edges' do
+      context 'when no have records in db.' do
+        it 'should return a empty array.' do
+          distances = []
+
+          expect(ApplicationHelper.parse_edges(distances)).to eq([])
+        end
+      end
+
+      context 'when have more than 1 record in db.' do
+        it 'should return a parsed matrix.' do
+          create(:distance_1)
+          distances = Distance.all
+
+          expect(ApplicationHelper.parse_edges(distances)).to eq([["a", "b", 10]])
+        end
+      end
+    end
   end
 end

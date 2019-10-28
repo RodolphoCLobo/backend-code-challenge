@@ -1,3 +1,4 @@
+require './lib/dijkstra'
 require 'require_all'
 require 'sinatra'
 require 'sinatra/json'
