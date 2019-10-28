@@ -39,8 +39,8 @@ class Dijkstra
 			node[:closed] = true
 			node[:neighbors].each do |neighbor|
 				neighbor_vertex = self.graph.detect { |s| s[:vertex] == neighbor && s[:closed] == false }
+				next if neighbor_vertex.nil?
 				self.edges.each do |edge|
-					next if neighbor_vertex.nil?
 					if edge.include?(node[:vertex]) && edge.include?(neighbor_vertex[:vertex])
 						matcher_distance = node[:distance] + edge[2]
 						if matcher_distance < neighbor_vertex[:distance]
