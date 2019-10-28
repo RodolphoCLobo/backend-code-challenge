@@ -53,4 +53,8 @@ class Dijkstra
 		end
 		recursive_dijkstra
 	end
+
+	def shortest_distance
+		self.graph.detect { |node| node[:vertex] == self.destination }[:distance]
+	end
 end
