@@ -12,6 +12,7 @@ group :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'database_cleaner'
   gem 'factory_bot'
+  gem 'rack-test'
   gem 'rspec'
   gem 'shoulda-matchers'
 end
