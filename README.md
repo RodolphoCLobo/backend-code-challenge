@@ -2,7 +2,7 @@
 
 Resolução do teste de processo seletivo da Rakuten Brasil:
 
-Foi utilizado o algoritmo de Dijkstra para solucionar o caso do melhor caminho, a lib criada não tem suporte em vértices com refências numéricas para seus nomes. Durante todo o projeto foi decidido usar Sinatra por ser uma API simples com apenas 2 rotas('/costs', '/distances').
+Foi utilizado o algoritmo de Dijkstra para solucionar o caso do melhor caminho, a lib criada não tem suporte em vértices com refências numéricas para seus nomes, o método que calcula o menor caminho é recursivo. Durante todo o projeto foi decidido usar Sinatra por ser uma API simples com apenas 2 rotas('/costs', '/distances').
 
 # Using
 
